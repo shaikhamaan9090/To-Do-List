@@ -1,0 +1,157 @@
+<div class="slds-modal slds-fade-in-open">
+  <div class="slds-modal__container">
+    <!-- Modal/Dialog header -->
+    <header class="slds-modal__header">
+      <h2 class="slds-text-heading_medium">
+        {{ isEditMode ? "Edit Task" : "New Task" }}
+      </h2>
+    </header>
+
+    <!-- Modal/Dialog body -->
+    <div class="slds-modal__content slds-p-around_medium">
+      <form [formGroup]="taskForm">
+        <div class="row">
+          <div class="col">
+            <div class="slds-form-element__control">
+              <div class="slds-form-element">
+                <label class="slds-form-element__label" for="select-01"
+                  >Assigned To</label
+                >
+                <div class="slds-form-element__control">
+                  <div class="slds-select_container">
+                    <select
+                      class="slds-select"
+                      id="select-01"
+                      formControlName="assignedToUser"
+                    >
+                      <option *ngFor="let user of userList" [value]="user.name">
+                        {{ user.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="slds-form-element">
+              <label class="slds-form-element__label" for="select-02"
+                >Status</label
+              >
+              <div class="slds-form-element__control">
+                <div class="slds-select_container">
+                  <select
+                    class="slds-select"
+                    id="select-02"
+                    formControlName="status"
+                  >
+                    <option
+                      *ngFor="let status of statusList"
+                      [value]="status.name"
+                    >
+                      {{ status.name }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <div class="slds-form-element__control">
+              <div class="slds-form-element">
+                <label class="slds-form-element__label" for="select-03"
+                  >Due Date</label
+                >
+                <div class="form-group">
+                  <input
+                    type="date"
+                    class="form-control"
+                    formControlName="dueDate"
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="slds-form-element__control">
+              <div class="slds-form-element">
+                <label class="slds-form-element__label" for="select-04"
+                  >Priority</label
+                >
+                <div class="slds-form-element__control">
+                  <div class="slds-select_container">
+                    <select
+                      class="slds-select"
+                      id="select-04"
+                      formControlName="priority"
+                    >
+                      <option
+                        *ngFor="let priority of priorityList"
+                        [value]="priority.name"
+                      >
+                        {{ priority?.name }}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <div class="slds-form-element">
+              <label class="slds-form-element__label" for="text-input-id-141">
+                Task Title</label
+              >
+              <div class="slds-form-element__control">
+                <input
+                  type="text"
+                  id="text-input-id-141"
+                  class="slds-input"
+                  formControlName="title"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-2">
+          <div class="col">
+            <div class="slds-form-element">
+              <label class="slds-form-element__label" for="textarea-id-01"
+                >Task Description</label
+              >
+              <div class="slds-form-element__control">
+                <textarea
+                  id="textarea-id-01"
+                  class="slds-textarea"
+                  formControlName="description"
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <!-- Modal/Dialog footer with Save and Cancel buttons -->
+    <footer class="slds-modal__footer">
+      <button
+        class="slds-button slds-button_neutral"
+        (click)="closeDialogBox()"
+      >
+        Cancel
+      </button>
+      <button
+        [class.disabled-button]="!taskForm?.valid"
+        class="slds-button slds-button_brand"
+        (click)="onSubmit()"
+      >
+        Save
+      </button>
+    </footer>
+  </div>
+</div>
+<div class="slds-backdrop slds-backdrop_open"></div>

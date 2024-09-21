@@ -1,0 +1,154 @@
+<div class="main-container">
+  <!-- Header above Table -->
+  <div class="header-container">
+    <div class="d-flex justify-content-between mt-2">
+      <div class="logo d-flex">
+        <span style="align-self: center">
+          <svg
+            width="26px"
+            height="26px"
+            viewBox="0 0 512 512"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink"
+          >
+            <title>tasks-all</title>
+            <g
+              id="Page-1"
+              stroke="none"
+              stroke-width="1"
+              fill="none"
+              fill-rule="evenodd"
+            >
+              <g
+                id="Combined-Shape"
+                fill="#000000"
+                transform="translate(70.530593, 46.125620)"
+              >
+                <path
+                  d="M185.469407,39.207713 L356.136074,39.207713 L356.136074,81.8743797 L185.469407,81.8743797 L185.469407,39.207713 Z M185.469407,188.541046 L356.136074,188.541046 L356.136074,231.207713 L185.469407,231.207713 L185.469407,188.541046 Z M185.469407,337.87438 L356.136074,337.87438 L356.136074,380.541046 L185.469407,380.541046 L185.469407,337.87438 Z M119.285384,-7.10542736e-15 L144.649352,19.5107443 L68.6167605,118.353113 L2.84217094e-14,58.3134476 L21.0721475,34.2309934 L64.0400737,71.8050464 L119.285384,-7.10542736e-15 Z M119.285384,149.333333 L144.649352,168.844078 L68.6167605,267.686446 L2.84217094e-14,207.646781 L21.0721475,183.564327 L64.0400737,221.13838 L119.285384,149.333333 Z M119.285384,298.666667 L144.649352,318.177411 L68.6167605,417.01978 L2.84217094e-14,356.980114 L21.0721475,332.89766 L64.0400737,370.471713 L119.285384,298.666667 Z"
+                ></path>
+              </g>
+            </g>
+          </svg>
+        </span>
+        <span><h1 style="font-size: 2rem">Tasks</h1></span>
+      </div>
+      <div class="me-1">
+        <!-- Button trigger modal -->
+        <button
+          (click)="openNewTaskDialog()"
+          class="slds-button slds-button_brand"
+        >
+          Add New Task
+        </button>
+        <button
+          (click)="refreshTaskList()"
+          class="slds-button slds-button_brand"
+        >
+          Refresh
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-container">
+    {{ tasks.length }} Records
+    <table
+      class="slds-table slds-table_cell-buffer slds-table_bordered slds-table_fixed-layout"
+    >
+      <thead>
+        <tr class="table-header"></tr>
+        <tr class="slds-line-height_reset">
+          <th scope="col">
+            <div class="slds-truncate" title="Task Title">Task Title</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="TAs Description">Assigned To</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Status">Status</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Due Date">Due Date</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Priority">Priority</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Comments">Comments</div>
+          </th>
+          <th scope="col">
+            <div class="slds-truncate" title="Actions">Actions</div>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of tasks">
+          <td>
+            <div class="slds-truncate" title="{{ task.title }}">
+              {{ task.title }}
+            </div>
+          </td>
+          <td>
+            <div class="slds-truncate" title="{{ task.assignedToUser }}">
+              {{ task.assignedToUser }}
+            </div>
+          </td>
+          <td>
+            <div class="slds-truncate" title="{{ task.status }}">
+              {{ task.status }}
+            </div>
+          </td>
+          <td>
+            <div class="slds-truncate" title="{{ task.dueDate }}">
+              {{ task.dueDate }}
+            </div>
+          </td>
+          <td>
+            <div class="slds-truncate" title="{{ task.priority }}">
+              {{ task.priority }}
+            </div>
+          </td>
+          <td>
+            <div class="slds-truncate" title="{{ task.description }}">
+              {{ task.description }}
+            </div>
+          </td>
+          <td>
+            <button
+              (click)="openEditDialog(task)"
+              class="slds-button slds-button_neutral"
+            >
+              Edit
+            </button>
+            <button
+              (click)="openDeleteDialog(task)"
+              class="slds-button slds-button_destructive"
+            >
+              Delete
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal Dialog for adding/updating tasks -->
+<app-task-form
+  *ngIf="showTaskFormDialog"
+  [task]="selectedTask"
+  [isEditMode]="isEditTask"
+  (taskSaved)="refreshTaskList()"
+  (closeDialog)="closeTaskFormDialog()"
+></app-task-form>
+
+<!-- Delete confirmation dialog -->
+<app-delete-confirmation
+  *ngIf="showDeleteDialog"
+  [task]="selectedTask"
+  (confirmDelete)="deleteTask(selectedTask.id)"
+  (cancelDelete)="closeDeleteDialog()"
+></app-delete-confirmation>

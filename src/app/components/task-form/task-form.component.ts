@@ -20,7 +20,6 @@ import { TaskService } from '../../services/task.service';
 })
 export class TaskFormComponent implements OnInit, AfterViewInit {
   @Input() task: Task;
-  @Input() selectedTaskId: number;
   @Input() isEditMode: boolean;
   @Output() taskSaved = new EventEmitter<void>(); // Event emitted when task is saved
   @Output() closeDialog = new EventEmitter<void>(); // Event emitted to close the dialog
@@ -76,7 +75,7 @@ export class TaskFormComponent implements OnInit, AfterViewInit {
     if (this.task.id) {
       const taskList = this.taskService.getTasks();
       for (let i = 0; i < taskList?.length; i++) {
-        if (taskList[i]?.id === this.selectedTaskId) {
+        if (taskList[i]?.id === this.task.id) {
           let taskObject = {
             id: taskList[i]?.id,
             ...this.taskForm?.value,
